@@ -1,6 +1,6 @@
 /***********************************************/
 /* Program: exercise1     Date:                */
-/* Authors:                                    */
+/* Authors: Ziqi y Josemi                      */
 /*                                             */
 /* Program that generates two random nunmbers  */
 /* between two given numbers                   */

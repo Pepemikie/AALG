@@ -13,6 +13,7 @@
 #define SORTING_H
 
 #include <stdio.h>
+#include <time.h>
 
 /* constants */
 

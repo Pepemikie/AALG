@@ -1,6 +1,6 @@
 /**************************************************/
 /* Program: exercise3       Date:                 */
-/* Authors:                                       */
+/* Authors: Ziqi y Josemi                         */
 /*                                                */
 /* Program that generates N random permutations   */
 /* with M elementos each                          */

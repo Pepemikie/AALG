@@ -1,6 +1,6 @@
 /********************************************************/
-/* Program: exeercise2      Date:                       */
-/* Authors:                                             */
+/* Program: exercise2      Date:                        */
+/* Authors: Ziqi y Josemi                               */
 /*                                                      */
 /* Program that generates random permutations           */
 /*                                                      */

@@ -1,6 +1,6 @@
 /**************************************************/
 /* Programa: ejercise4       Date:                */
-/* Authors:                                       */
+/* Authors: Ziqi y Josemi                         */
 /*                                                */
 /* Program that checks InserttSort                 */
 /*                                                */

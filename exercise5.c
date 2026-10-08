@@ -1,6 +1,6 @@
 /***********************************************************/
 /* Program: exercise5                  Date:               */
-/* Authors:                                                */
+/* Authors: Ziqi y Josemi                                  */
 /*                                                         */
 /* Programa that writes in a file                          */
 /* the average times of the algorithm                      */

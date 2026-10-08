@@ -33,7 +33,7 @@ int random_num(int inf, int sup) {
 
 /***************************************************/
 /* Function: generate_perm Date:                   */
-/* Authors: Ziqi y Jose Miguel                     */
+/* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Rutine that generates a random permutation      */
 /*                                                 */
@@ -70,7 +70,7 @@ int *generate_perm(int N) {
 
 /***************************************************/
 /* Function: generate_permutations Date:           */
-/* Authors: Ziqi y Jose Miguel                     */
+/* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Function that generates n_perms random          */
 /* permutations with N elements                    */
