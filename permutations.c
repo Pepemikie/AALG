@@ -14,7 +14,7 @@
 #include <stdio.h>
 /***************************************************/
 /* Function: random_num Date:                      */
-/* Authors:                                        */
+/* Authors: Ziqi y Jose Miguel                     */
 /*                                                 */
 /* Rutine that generates a random number           */
 /* between two given numbers                       */
@@ -25,8 +25,7 @@
 /* Output:                                         */
 /* int: random number                              */
 /***************************************************/
-int random_num(int inf, int sup)
-{
+int random_num(int inf, int sup) {
   int r;
   r = (rand() / (RAND_MAX + 1.)) * (sup - inf + 1) + inf;
   return r;
@@ -34,7 +33,7 @@ int random_num(int inf, int sup)
 
 /***************************************************/
 /* Function: generate_perm Date:                   */
-/* Authors:                                        */
+/* Authors: Ziqi y Jose Miguel                     */
 /*                                                 */
 /* Rutine that generates a random permutation      */
 /*                                                 */
@@ -45,25 +44,21 @@ int random_num(int inf, int sup)
 /* that contains the permitation                   */
 /* or NULL in case of error                        */
 /***************************************************/
-int *generate_perm(int N)
-{
+int *generate_perm(int N) {
   int i;
   int *perm;
   int ran, dum;
 
   perm = (int *)calloc(N, sizeof(int));
-  if (perm == NULL)
-  {
+  if (perm == NULL) {
     return NULL;
   }
 
-  for (i = 0; i <= N - 1; i++)
-  {
+  for (i = 0; i <= N - 1; i++) {
     perm[i] = i + 1;
   }
 
-  for (i = 0; i <= N - 1; i++)
-  {
+  for (i = 0; i <= N - 1; i++) {
     ran = random_num(i, N - 1);
     dum = perm[ran];
     perm[ran] = perm[i];
@@ -75,7 +70,7 @@ int *generate_perm(int N)
 
 /***************************************************/
 /* Function: generate_permutations Date:           */
-/* Authors:                                        */
+/* Authors: Ziqi y Jose Miguel                     */
 /*                                                 */
 /* Function that generates n_perms random          */
 /* permutations with N elements                    */
@@ -88,32 +83,26 @@ int *generate_perm(int N)
 /* to each of the permutations                     */
 /* NULL en case of error                           */
 /***************************************************/
-int **generate_permutations(int n_perms, int N)
-{
+int **generate_permutations(int n_perms, int N) {
 
   int i, j;
   int **perms;
 
-  if (n_perms <= 0 || N <= 0)
-  {
+  if (n_perms <= 0 || N <= 0) {
     return NULL;
   }
 
   perms = (int **)malloc(n_perms * sizeof(int *));
-  if (perms == NULL)
-  {
+  if (perms == NULL) {
     return NULL;
   }
 
-  for (i = 0; i < n_perms; i++)
-  {
+  for (i = 0; i < n_perms; i++) {
     perms[i] = generate_perm(N);
 
-    if (perms[i] == NULL)
-    {
+    if (perms[i] == NULL) {
 
-      for (j = 0; j < i; j++)
-      {
+      for (j = 0; j < i; j++) {
         free(perms[j]);
       }
       free(perms);
