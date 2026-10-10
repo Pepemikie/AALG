@@ -14,7 +14,7 @@
 #include <stdio.h>
 /***************************************************/
 /* Function: random_num Date:                      */
-/* Authors: Ziqi y Jose Miguel                     */
+/* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Rutine that generates a random number           */
 /* between two given numbers                       */
@@ -27,7 +27,15 @@
 /***************************************************/
 int random_num(int inf, int sup) {
   int r;
-  r = (rand() / (RAND_MAX + 1.)) * (sup - inf + 1) + inf;
+
+  if (inf < 0 || sup < inf || (sup - inf >= RAND_MAX))
+    return ERR;
+
+  r = ((rand() / (RAND_MAX + 1.0)) * (sup - inf + 1) + inf);
+
+  if (r > (RAND_MAX + 1.0))
+    return ERR;
+  
   return r;
 }
 
@@ -45,9 +53,12 @@ int random_num(int inf, int sup) {
 /* or NULL in case of error                        */
 /***************************************************/
 int *generate_perm(int N) {
-  int i;
-  int *perm;
-  int ran, dum;
+  int i, ran, dum;
+  int *perm = NULL;
+
+  if (N <= 0) {
+    return NULL;
+  }
 
   perm = (int *)calloc(N, sizeof(int));
   if (perm == NULL) {
@@ -60,6 +71,10 @@ int *generate_perm(int N) {
 
   for (i = 0; i <= N - 1; i++) {
     ran = random_num(i, N - 1);
+    if (ran == ERR) {
+      free(perm);
+      return NULL;
+    }
     dum = perm[ran];
     perm[ran] = perm[i];
     perm[i] = dum;
@@ -84,7 +99,6 @@ int *generate_perm(int N) {
 /* NULL en case of error                           */
 /***************************************************/
 int **generate_permutations(int n_perms, int N) {
-
   int i, j;
   int **perms;
 
@@ -101,7 +115,6 @@ int **generate_permutations(int n_perms, int N) {
     perms[i] = generate_perm(N);
 
     if (perms[i] == NULL) {
-
       for (j = 0; j < i; j++) {
         free(perms[j]);
       }

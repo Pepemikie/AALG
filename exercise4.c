@@ -2,7 +2,7 @@
 /* Programa: ejercise4       Date:                */
 /* Authors: Ziqi y Josemi                         */
 /*                                                */
-/* Program that checks InserttSort                 */
+/* Program that checks InsertSort                 */
 /*                                                */
 /* Input: Command Line                            */
 /* -size: number of elements of each permutation  */
@@ -16,7 +16,7 @@
 #include "sorting.h"
 
 int main(int argc, char** argv) {
-  int tamano, i, j, ret;
+  int tamano = 0, i, j, ret = 0;
   int* perm = NULL;
 
   srand(time(NULL));
@@ -29,8 +29,8 @@ int main(int argc, char** argv) {
     return 0;
   }
   printf("Practice number 1, section 4\n");
-  printf("Done by: your names\n");
-  printf("Group: Your group\n");
+  printf("Done by: Ziqi y Josemi\n");
+  printf("Group: 1272/1202\n");
 
   /* check command line */
   for(i = 1; i < argc; i++) {

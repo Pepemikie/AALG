@@ -20,7 +20,7 @@
 int main(int argc, char** argv)
 {
   int i;
-  unsigned int n_perms, tamanio, j, k;
+  unsigned int n_perms = 0, tamanio = 0, j, k;
   int** perms = NULL;
 
   srand(time(NULL));
@@ -35,8 +35,8 @@ int main(int argc, char** argv)
   }
 
   printf("Practice number 1, section 3\n");
-  printf("Done by: your names\n");
-  printf("Group: Your group\n");
+  printf("Done by: Ziqi y Josemi\n");
+  printf("Group: 1272/1202\n");
 
 
   /* check command line la linea de comandos */
@@ -48,6 +48,11 @@ int main(int argc, char** argv)
     } else {
       fprintf(stderr, "Wrong paramenter %s\n", argv[i]);
     }
+  }
+
+  if (n_perms <= 0 || tamanio <= 0) {
+    fprintf(stderr, "Parameters must be positive\n");
+    exit(-1);
   }
 
   perms = generate_permutations(n_perms, tamanio);

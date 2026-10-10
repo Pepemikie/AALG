@@ -20,8 +20,8 @@
 
 int main(int argc, char** argv)
 {
-  int i;
-  unsigned int inf, sup, num, j;
+  int i, r;
+  unsigned int inf = 0, sup = 0, num = 0, j;
 
   srand(time(NULL));
 
@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     exit(-1);
   }
   printf("Practice no 1, Section 1\n");
-  printf("Done by: Your names\n");
-  printf("Grupo: Your group\n");
+  printf("Done by: Ziqi y Josemi\n");
+  printf("Grupo: 1272/1202\n");
 
   /* check command line */
   for(i = 1; i < argc; i++) {
@@ -48,12 +48,18 @@ int main(int argc, char** argv)
       num = atoi(argv[++i]);
     } else {
       fprintf(stderr, "Wrong Parameter %s \n", argv[i]);
+      exit(-1);
     }
   }
 
   /* print data */
   for(j = 0; j < num; j++) { 
-    printf("%d\n", random_num(inf, sup));
+    r = random_num(inf, sup);
+    if(r == ERR) {
+      fprintf(stderr, "Error generating random number\n");
+      exit(-1);
+    }
+    printf("%d\n", r);
   }
 
   return 0;
