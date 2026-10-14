@@ -26,7 +26,7 @@ int main(int argc, char** argv)
   srand(time(NULL));
 
   if (argc != 7) {
-    fprintf(stderr, "Input parameter error:\n\n");
+    fprintf(stderr, "Inpput parameter error:\n\n");
     fprintf(stderr, "%s -limInf <int> -limSup <int> -numN <int>\n", argv[0]);
     fprintf(stderr, "Where:\n");
     fprintf(stderr, " -limInf : Lower limit.\n");
