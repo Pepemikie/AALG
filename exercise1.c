@@ -20,7 +20,7 @@
 
 int main(int argc, char** argv)
 {
-  int i, r,a;
+  int i, r;
   unsigned int inf = 0, sup = 0, num = 0, j;
 
   srand(time(NULL));
