@@ -1,19 +1,17 @@
 /***********************************************************/
-/* Program: exercise5                  Date:               */
+/* Program: exercise5                  Date: 2026          */
 /* Authors: Ziqi y Josemi                                  */
 /*                                                         */
-/* Programa that writes in a file                          */
-/* the average times of the algorithm                      */
-/* of sorting by insertion                                 */
+/* Program that writes in a file the average times         */
+/* of the sorting algorithms (InsertSort & BubbleSort)     */
 /*                                                         */
 /* Input: Command Line                                     */
 /* -num_min: lowest number of table elements               */
 /* -num_max: highest number of table elements              */
-/* -incr: increment\n                                      */
+/* -incr: increment                                        */
 /* -numP: number of permutations to average                */
-/* -outputFile: Output file name                           */
-/* Output: -1 in case of error                              */
-/* 0 otherwise                                            */
+/* -outputFile: Output file name base                      */
+/* Output: 0: OK, -1: ERR                                  */
 /***********************************************************/
 
 #include <stdlib.h>
@@ -25,8 +23,10 @@
 
 int main(int argc, char** argv)
 {
-  int i, num_min, num_max, incr, n_perms;
-  char nombre[256];
+  int i, num_min = 0, num_max = 0, incr = 0, n_perms = 0;
+  char nombre[256] = "";
+  char fichero_insert[300] = "";
+  char fichero_bubble[300] = "";
   short ret;
 
   srand(time(NULL));
@@ -44,9 +44,9 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  printf("Practice number 1, section 5\n");
+  printf("Practice number 1, sections 5 & 6\n");
   printf("Done by: Ziqi y Josemi\n");
-  printf("Group: 1202/1272\n");
+  printf("Group: 1272/1202\n");
   
   /* check command line */
   for(i = 1; i < argc ; i++) {
@@ -61,18 +61,31 @@ int main(int argc, char** argv)
     } else if (strcmp(argv[i], "-outputFile") == 0) {
       strcpy(nombre, argv[++i]);
     } else {
-      fprintf(stderr, "Wrong paramenter %s\n", argv[i]);
+      fprintf(stderr, "Wrong parameter %s\n", argv[i]);
+      exit(-1);
     }
   }
 
-  /* compute times */
-  ret = generate_sorting_times(BubbleSort, nombre,num_min, num_max,incr, n_perms);
-  if (ret == ERR) { /* ERR_TIME should be a negative number */
-    printf("Error in function generate_sorting_times\n");
-    exit(-1);
-  }
-  printf("Correct output \n");
+  /* Formatear nombres de ficheros de salida distintos */
+  sprintf(fichero_insert, "insert_%s", nombre);
+  sprintf(fichero_bubble, "bubble_%s", nombre);
 
+  /* Medición 1: InsertSort */
+  printf("Calculando tiempos para InsertSort...\n");
+  ret = generate_sorting_times(InsertSort, fichero_insert, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de InsertSort\n");
+    exit(-1); 
+  }
+
+  /* Medición 2: BubbleSort */
+  printf("Calculando tiempos para BubbleSort...\n");
+  ret = generate_sorting_times(BubbleSort, fichero_bubble, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de BubbleSort\n");
+    exit(-1); 
+  }
+
+  printf("Correct output: Archivos generados con éxito.\n");
   return 0;
 }
-
