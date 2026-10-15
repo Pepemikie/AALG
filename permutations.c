@@ -28,7 +28,7 @@
 int random_num(int inf, int sup) {
   int r;
 
-  if (inf < 0 || sup < inf || (sup - inf >= RAND_MAX))
+  if (inf < 0 ||sup < inf || (((sup - inf) - 1) > RAND_MAX))
     return ERR;
   /*
   r = ((rand() / (RAND_MAX + 1.0)) * (sup - inf + 1) + inf);
@@ -36,9 +36,6 @@ int random_num(int inf, int sup) {
  
   /* Consulta 1*/
   r =  inf + rand() % (sup - inf + 1);
-
-  if (r > (RAND_MAX + 1.0))
-    return ERR;
   
   return r;
 }
@@ -50,7 +47,7 @@ int random_num(int inf, int sup) {
 /* Rutine that generates a random permutation      */
 /*                                                 */
 /* Input:                                          */
-/* int n: number of elements in the permutation    */
+/* int N: number of elements in the permutation    */
 /* Output:                                         */
 /* int *: pointer to integer array                 */
 /* that contains the permitation                   */

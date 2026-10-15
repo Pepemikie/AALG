@@ -25,7 +25,7 @@ int InsertSort(int* array, int ip, int iu) {
   for (i = ip + 1; i <= iu; i++) {
     aux = array[i];
     j = i - 1;
-while (j >= ip) {
+    while (j >= ip) {
       cont++;
       if (array[j] > aux) {
         array[j + 1] = array[j];
@@ -41,7 +41,7 @@ while (j >= ip) {
 
 
 /***************************************************/
-/* Function: SelectSort    Date: 05/10/2026        */
+/* Function: BubbleSort    Date: 05/10/2026        */
 /* Your comment                                    */
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu) {
