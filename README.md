@@ -28,4 +28,4 @@ El resultado muestra:
 
 Aqui se ve que no es equitativo.
 
-Para 
+https://prod.liveshare.vsengsaas.visualstudio.com/join?FDD857693B1966D0BADCFB3AB0868362DF96
