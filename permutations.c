@@ -30,13 +30,9 @@ int random_num(int inf, int sup) {
 
   if (inf < 0 ||sup < inf || (((sup - inf) - 1) > RAND_MAX))
     return ERR;
-  /*
-  r = ((rand() / (RAND_MAX + 1.0)) * (sup - inf + 1) + inf);
-  */
- 
-  /* Consulta 1*/
-  r =  inf + rand() % (sup - inf + 1);
   
+  r = ((rand() / (RAND_MAX + 1.0)) * (sup - inf + 1) + inf);
+    
   return r;
 }
 
