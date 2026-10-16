@@ -14,7 +14,7 @@
 
 /***************************************************/
 /* Function: InsertSort    Date: 05/10/2026        */
-/* Your comment                                    */
+/* Ordena de mayor a menor usando inserción        */
 /***************************************************/
 int InsertSort(int* array, int ip, int iu) {
   int i, j;

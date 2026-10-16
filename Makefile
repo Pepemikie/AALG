@@ -9,9 +9,14 @@ EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)
 
-.PHONY : clean
+.PHONY : clean cleanpng cleanall
 clean :
 	rm -f *.o core *.log $(EXE)
+
+cleanpng:
+	rm -f *.png
+
+cleanall: clean cleanpng
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
 	@echo "#---------------------------"

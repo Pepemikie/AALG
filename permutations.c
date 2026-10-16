@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 /***************************************************/
-/* Function: random_num Date:                      */
+/* Function: random_num Date: 16/10/2026           */
 /* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Rutine that generates a random number           */
@@ -37,7 +37,7 @@ int random_num(int inf, int sup) {
 }
 
 /***************************************************/
-/* Function: generate_perm Date:                   */
+/* Function: generate_perm Date: 16/10/2026        */
 /* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Rutine that generates a random permutation      */
@@ -81,7 +81,7 @@ int *generate_perm(int N) {
 }
 
 /***************************************************/
-/* Function: generate_permutations Date:           */
+/* Function: generate_permutations Date: 16/10/2026 */
 /* Authors: Ziqi y Josemi                          */
 /*                                                 */
 /* Function that generates n_perms random          */
