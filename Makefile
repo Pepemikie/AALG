@@ -9,9 +9,14 @@ EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)
 
-.PHONY : clean
+.PHONY : clean cleanpng cleanall
 clean :
-	rm -f *.o core $(EXE)
+	rm -f *.o core *.log $(EXE)
+
+cleanpng:
+	rm -f *.png
+
+cleanall: clean cleanpng
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
 	@echo "#---------------------------"
@@ -43,21 +48,40 @@ sorting.o : sorting.c sorting.h
 	
 exercise1_test:
 	@echo Running exercise1
-	@./exercise1 -limInf 1 -limSup 5 -numN 15
+	@./exercise1 -limInf 1 -limSup 5 -numN 10
 
 exercise2_test:
 	@echo Running exercise2
-	@./exercise2 -size 1 -numP 5
+	@./exercise2 -size 5 -numP 5
 
 exercise3_test:
 	@echo Running exercise3
-	@./exercise3 -size 1 -numP 5
+	@./exercise3 -size 5 -numP 5
 
 exercise4_test:
 	@echo Running exercise4
-	@./exercise4 -size 1
+	@./exercise4 -size 8
 
 exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
 
+valgrind_exercise1:
+	@echo Running valgrind on exercise1
+	@valgrind --leak-check=full -s ./exercise1 -limInf 1 -limSup 5 -numN 10
+
+valgrind_exercise2:
+	@echo Running valgrind on exercise2
+	@valgrind --leak-check=full -s ./exercise2 -size 5 -numP 5
+
+valgrind_exercise3:
+	@echo Running valgrind on exercise3
+	@valgrind --leak-check=full -s ./exercise3 -size 5 -numP 5
+
+valgrind_exercise4:
+	@echo Running valgrind on exercise4
+	@valgrind --leak-check=full -s ./exercise4 -size 5
+
+valgrind_exercise5:
+	@echo Running valgrind on exercise5
+	@valgrind --leak-check=full -s ./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
