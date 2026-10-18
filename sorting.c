@@ -52,6 +52,7 @@ int InsertSort(int* array, int ip, int iu) {
 /* el numero de ejecuciones de la OB               */
 /* (array[j] > array[j+1]).                        */
 /***************************************************/
+
 int BubbleSort(int* array, int ip, int iu) {
   int flag = 1;
   int i = iu, j;

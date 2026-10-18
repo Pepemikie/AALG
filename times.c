@@ -16,6 +16,7 @@
 
 /***************************************************/
 /* Function: average_sorting_time  Date: 09/10/2026*/
+/* Authors: Ziqi y Josemi                          */
 /* Ordena n_perms permutaciones de tamaño N con    */
 /* method y guarda en ptime el tiempo medio de CPU */
 /* y la OB media, minima y maxima.                 */
@@ -102,6 +103,7 @@ short average_sorting_time(pfunc_sort metodo,
 
 /***************************************************/
 /* Function: generate_sorting_times Date: 09/10/2026 */
+/* Authors: Ziqi y Josemi                          */
 /* Mide method para N = num_min + k*incr <= num_max*/
 /* y guarda la tabla en file. Devuelve OK o ERR.   */
 /***************************************************/
@@ -140,6 +142,7 @@ short generate_sorting_times(pfunc_sort method, char *file,
 
 /***************************************************/
 /* Function: save_time_table  Date: 09/10/2026     */
+/* Authors: Ziqi y Josemi                          */
 /* Escribe una fila por tamaño en file:            */
 /* N n_elems time average_ob min_ob max_ob         */
 /* Devuelve OK o ERR.                              */
