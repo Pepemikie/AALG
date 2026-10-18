@@ -1,7 +1,0 @@
-Linux DESKTOP-9FO0BV3 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
-gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
-7:CFLAGS = -Wall
-26:	$(CC) $(CFLAGS) -o $@ $@.o sorting.o times.o permutations.o
-33:	$(CC) $(CFLAGS) -c $<
-40:	$(CC) $(CFLAGS) -c $<
-47:	$(CC) $(CFLAGS) -c $<
