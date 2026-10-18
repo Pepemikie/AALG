@@ -143,20 +143,27 @@ short save_time_table(char *file, PTIME_AA ptime, int n_times)
 {
   FILE *fp;
   int i;
+
+  if (!file || !ptime || n_times <= 0)
+    return ERR;
+
   fp = fopen(file, "w");
   if (fp == NULL)
-  {
     return ERR;
-  }
 
+  /* 6 columnas: N n_elems time average_ob min_ob max_ob */
   for (i = 0; i < n_times; i++)
   {
-    if (fprintf(fp, "%d %f %f %d %d\n", ptime[i].N, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob) < 0)
+    if (fprintf(fp, "%d %d %.9f %.4f %d %d\n", ptime[i].N, ptime[i].n_elems,
+                ptime[i].time, ptime[i].average_ob, ptime[i].min_ob,
+                ptime[i].max_ob) < 0)
     {
       fclose(fp);
       return ERR;
     }
   }
-  fclose(fp);
+
+  if (fclose(fp) != 0)
+    return ERR;
   return OK;
 }

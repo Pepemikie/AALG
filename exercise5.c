@@ -21,6 +21,8 @@
 #include "sorting.h"
 #include "times.h"
 
+#define SEED 12345 /* semilla fija: reproducible */
+
 int main(int argc, char** argv)
 {
   int i, num_min = 0, num_max = 0, incr = 0, n_perms = 0;
@@ -29,7 +31,7 @@ int main(int argc, char** argv)
   char fichero_bubble[300] = "";
   short ret;
 
-  srand(time(NULL));
+  srand(SEED);
 
   if (argc != 11) {
     fprintf(stderr, "Error in input parameters:\n\n");
@@ -59,7 +61,11 @@ int main(int argc, char** argv)
     } else if (strcmp(argv[i], "-numP") == 0) {
       n_perms = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-outputFile") == 0) {
-      strcpy(nombre, argv[++i]);
+      if (strlen(argv[++i]) > 200) {
+        fprintf(stderr, "Output file name too long\n");
+        exit(-1);
+      }
+      strcpy(nombre, argv[i]);
     } else {
       fprintf(stderr, "Wrong parameter %s\n", argv[i]);
       exit(-1);
@@ -72,6 +78,7 @@ int main(int argc, char** argv)
 
   /* Medición 1: InsertSort */
   printf("Calculando tiempos para InsertSort...\n");
+  srand(SEED); /* mismas permutaciones para ambos metodos */
   ret = generate_sorting_times(InsertSort, fichero_insert, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de InsertSort\n");
@@ -80,6 +87,7 @@ int main(int argc, char** argv)
 
   /* Medición 2: BubbleSort */
   printf("Calculando tiempos para BubbleSort...\n");
+  srand(SEED); /* misma secuencia de rand() que InsertSort */
   ret = generate_sorting_times(BubbleSort, fichero_bubble, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de BubbleSort\n");

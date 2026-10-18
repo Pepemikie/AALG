@@ -1,10 +1,8 @@
-# Configuración de salida
+# Formato de los .dat (6 columnas): 1=N 2=n_elems 3=time(s) 4=average_ob 5=min_ob 6=max_ob
 set terminal pngcairo size 900,650 font "Arial,10"
 set grid
 
-# =====================================================================
-# GRÁFICA 1: HISTOGRAMA DE random_num (Apartado 1)
-# =====================================================================
+# ============ 1. Histograma de random_num (random_num.dat: valor frecuencia) ============
 set output "histograma_random_num.png"
 set title "Histograma de random_num en [1, 10] (100000 muestras)"
 set xlabel "Valor generado"
@@ -21,46 +19,38 @@ unset xrange
 unset yrange
 unset boxwidth
 set xtics autofreq
-set key default
+set key left top
 
-# =====================================================================
-# GRÁFICA 2: COMPARATIVA DE TIEMPOS REALES DE CPU (Columna 2)
-# =====================================================================
+# ============ 2. Tiempos medios de CPU (columna 3) ============
 set output "comparativa_tiempos_real.png"
-set title "Comparativa de Tiempos Medios de CPU (InsertSort vs BubbleSort)"
-set xlabel "Tamaño de la permutación (N)"
-set ylabel "Tiempo medio de CPU (Segundos)"
-plot "insert_resultados.dat" using 1:2 with linespoints lw 2 title "InsertSort", \
-     "bubble_resultados.dat" using 1:2 with linespoints lw 2 title "BubbleSort"
-
-# =====================================================================
-# GRÁFICA 3: COMPARATIVA DE OPERACIONES BÁSICAS MEDIAS (Columna 3)
-# =====================================================================
-set output "comparativa_operaciones_medias.png"
-set title "Comparativa del Número Medio de Operaciones Básicas"
-set xlabel "Tamaño de la permutación (N)"
-set ylabel "Número medio de ejecuciones de la OB"
+set title "Tiempo medio de CPU por permutación (InsertSort vs BubbleSort)"
+set xlabel "Tamaño de la permutación N (elementos)"
+set ylabel "Tiempo medio de CPU (s)"
 plot "insert_resultados.dat" using 1:3 with linespoints lw 2 title "InsertSort", \
      "bubble_resultados.dat" using 1:3 with linespoints lw 2 title "BubbleSort"
 
-# =====================================================================
-# GRÁFICA 4: ENVOLVENTE INSERTION (Media, Mín, Máx)
-# =====================================================================
-set output "ops_insert.png"
-set title "Métricas de Operaciones Básicas en InsertSort"
-set xlabel "Tamaño de la permutación (N)"
-set ylabel "Número de Operaciones Básicas"
-plot "insert_resultados.dat" using 1:3 with lines lw 2 lt rgb "blue" title "Media OB", \
-     "insert_resultados.dat" using 1:4 with lines lt rgb "green" title "Mínimo OB", \
-     "insert_resultados.dat" using 1:5 with lines lt rgb "red" title "Máximo OB"
+# ============ 3. OB media de ambos (columna 4) ============
+set output "comparativa_operaciones_medias.png"
+set title "Número medio de ejecuciones de la OB"
+set xlabel "Tamaño de la permutación N (elementos)"
+set ylabel "Ejecuciones medias de la OB (comparaciones)"
+plot "insert_resultados.dat" using 1:4 with linespoints lw 2 title "InsertSort", \
+     "bubble_resultados.dat" using 1:4 with linespoints lw 2 title "BubbleSort"
 
-# =====================================================================
-# GRÁFICA 5: ENVOLVENTE BUBBLESORT (Media, Mín, Máx)
-# =====================================================================
+# ============ 4 y 5. Media, mínimo y máximo: MISMA ESCALA Y en ambas ============
+# YMAX ~ num_max*(num_max-1)/2 ; para num_max = 2000 -> 2000000
+YMAX = 2000000
+set yrange [0:YMAX]
+set ylabel "Ejecuciones de la OB (comparaciones)"
+
+set output "ops_insert.png"
+set title "InsertSort: ejecuciones de la OB (media, mínimo y máximo)"
+plot "insert_resultados.dat" using 1:4 with lines lw 2 lt rgb "blue" title "Media", \
+     "insert_resultados.dat" using 1:5 with lines lt rgb "green" title "Mínimo", \
+     "insert_resultados.dat" using 1:6 with lines lt rgb "red" title "Máximo"
+
 set output "ops_bubble.png"
-set title "Métricas de Operaciones Básicas en BubbleSort"
-set xlabel "Tamaño de la permutación (N)"
-set ylabel "Número de Operaciones Básicas"
-plot "bubble_resultados.dat" using 1:3 with lines lw 2 lt rgb "blue" title "Media OB", \
-     "bubble_resultados.dat" using 1:4 with lines lt rgb "green" title "Mínimo OB", \
-     "bubble_resultados.dat" using 1:5 with lines lt rgb "red" title "Máximo OB"
+set title "BubbleSort: ejecuciones de la OB (media, mínimo y máximo)"
+plot "bubble_resultados.dat" using 1:4 with lines lw 2 lt rgb "blue" title "Media", \
+     "bubble_resultados.dat" using 1:5 with lines lt rgb "green" title "Mínimo", \
+     "bubble_resultados.dat" using 1:6 with lines lt rgb "red" title "Máximo"
