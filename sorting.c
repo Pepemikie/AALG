@@ -14,8 +14,12 @@
 
 /***************************************************/
 /* Function: InsertSort    Date: 05/10/2026        */
-/* Ordena de mayor a menor usando inserción        */
+/* Authors: Ziqi y Josemi                          */
+/* Ordena de menor a mayor array[ip..iu] por       */
+/* insercion. Devuelve ERR o el numero de          */
+/* ejecuciones de la OB (array[j] > aux).          */
 /***************************************************/
+
 int InsertSort(int* array, int ip, int iu) {
   int i, j;
   int aux, cont = 0;
@@ -42,7 +46,11 @@ int InsertSort(int* array, int ip, int iu) {
 
 /***************************************************/
 /* Function: BubbleSort    Date: 05/10/2026        */
-/* Your comment                                    */
+/* Authors: Ziqi y Josemi                          */
+/* Ordena de menor a mayor array[ip..iu] por       */
+/* burbuja con parada anticipada. Devuelve ERR o   */
+/* el numero de ejecuciones de la OB               */
+/* (array[j] > array[j+1]).                        */
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu) {
   int flag = 1;

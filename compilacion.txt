@@ -1,0 +1,45 @@
+gcc -ansi -pedantic -Wall   -c -o exercise1.o exercise1.c
+#---------------------------
+# Generating sorting.o 
+# Depepends on sorting.c sorting.h
+# Has changed sorting.c
+gcc -ansi -pedantic -Wall -c sorting.c
+#---------------------------
+# Generating times.o 
+# Depepends on times.c times.h
+# Has changed times.c
+gcc -ansi -pedantic -Wall -c times.c
+#---------------------------
+# Generating permutations.o 
+# Depepends on permutations.c permutations.h
+# Has changed permutations.c
+gcc -ansi -pedantic -Wall -c permutations.c
+#---------------------------
+# Generating exercise1 
+# Depepends on exercise1.o sorting.o times.o permutations.o
+# Has changed exercise1.o
+gcc -ansi -pedantic -Wall -o exercise1 exercise1.o sorting.o times.o permutations.o
+gcc -ansi -pedantic -Wall   -c -o exercise2.o exercise2.c
+#---------------------------
+# Generating exercise2 
+# Depepends on exercise2.o sorting.o times.o permutations.o
+# Has changed exercise2.o
+gcc -ansi -pedantic -Wall -o exercise2 exercise2.o sorting.o times.o permutations.o
+gcc -ansi -pedantic -Wall   -c -o exercise3.o exercise3.c
+#---------------------------
+# Generating exercise3 
+# Depepends on exercise3.o sorting.o times.o permutations.o
+# Has changed exercise3.o
+gcc -ansi -pedantic -Wall -o exercise3 exercise3.o sorting.o times.o permutations.o
+gcc -ansi -pedantic -Wall   -c -o exercise4.o exercise4.c
+#---------------------------
+# Generating exercise4 
+# Depepends on exercise4.o sorting.o times.o permutations.o
+# Has changed exercise4.o
+gcc -ansi -pedantic -Wall -o exercise4 exercise4.o sorting.o times.o permutations.o
+gcc -ansi -pedantic -Wall   -c -o exercise5.o exercise5.c
+#---------------------------
+# Generating exercise5 
+# Depepends on exercise5.o sorting.o times.o permutations.o
+# Has changed exercise5.o
+gcc -ansi -pedantic -Wall -o exercise5 exercise5.o sorting.o times.o permutations.o

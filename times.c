@@ -15,10 +15,13 @@
 #include <stdlib.h>
 
 /***************************************************/
-/* Function: average_sorting_time Date:            */
-/*                                                 */
-/* Your documentation                              */
+/* Function: average_sorting_time  Date: 09/10/2026*/
+/* Ordena n_perms permutaciones de tamaño N con    */
+/* method y guarda en ptime el tiempo medio de CPU */
+/* y la OB media, minima y maxima.                 */
+/* Devuelve OK o ERR.                              */
 /***************************************************/
+
 short average_sorting_time(pfunc_sort metodo,
                            int n_perms,
                            int N,
@@ -98,10 +101,11 @@ short average_sorting_time(pfunc_sort metodo,
 }
 
 /***************************************************/
-/* Function: generate_sorting_times Date:          */
-/*                                                 */
-/* Your documentation                              */
+/* Function: generate_sorting_times Date: 09/10/2026 */
+/* Mide method para N = num_min + k*incr <= num_max*/
+/* y guarda la tabla en file. Devuelve OK o ERR.   */
 /***************************************************/
+
 short generate_sorting_times(pfunc_sort method, char *file,
                              int num_min, int num_max,
                              int incr, int n_perms)
@@ -135,10 +139,12 @@ short generate_sorting_times(pfunc_sort method, char *file,
 }
 
 /***************************************************/
-/* Function: save_time_table Date:                 */
-/*                                                 */
-/* Your documentation                              */
+/* Function: save_time_table  Date: 09/10/2026     */
+/* Escribe una fila por tamaño en file:            */
+/* N n_elems time average_ob min_ob max_ob         */
+/* Devuelve OK o ERR.                              */
 /***************************************************/
+
 short save_time_table(char *file, PTIME_AA ptime, int n_times)
 {
   FILE *fp;
