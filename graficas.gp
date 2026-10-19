@@ -4,7 +4,7 @@ set grid
 
 # ============ 1. Histograma de random_num (random_num.dat: valor frecuencia) ============
 set output "histograma_random_num.png"
-set title "Histograma de random_num en [1, 10] (100000 muestras)"
+set title "Histograma de random num en [1, 10] (100000 muestras)"
 set xlabel "Valor generado"
 set ylabel "Frecuencia (número de apariciones)"
 set style fill solid 0.7
