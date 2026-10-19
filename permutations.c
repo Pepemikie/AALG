@@ -26,14 +26,20 @@
 /* int: random number                              */
 /***************************************************/
 int random_num(int inf, int sup) {
-  int r;
+  unsigned int r, lim, n_inter;
 
-  if (inf < 0 ||sup < inf || (((sup - inf) - 1) > RAND_MAX))
+  if (inf < 0 || sup < inf || (sup - inf) > RAND_MAX)
     return ERR;
-  
-  r = ((rand() / (RAND_MAX + 1.0)) * (sup - inf + 1) + inf);
-    
-  return r;
+
+  n_inter = (unsigned int)(sup - inf) + 1;
+
+  lim = ((unsigned int)RAND_MAX + 1) / n_inter * n_inter;
+
+  do {
+    r = (unsigned int)rand();
+  } while (r >= lim);
+
+  return ((r % n_inter) + inf);
 }
 
 /***************************************************/
