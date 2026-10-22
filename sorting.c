@@ -79,6 +79,15 @@ int BubbleSort(int* array, int ip, int iu) {
 }
 
 
+/***************************************************/
+/* Function: BubbleSort    Date: 05/10/2026        */
+/* Authors: Ziqi y Josemi                          */
+/* Ordena de menor a mayor array[ip..iu] por       */
+/* burbuja con parada anticipada. Devuelve ERR o   */
+/* el numero de ejecuciones de la OB               */
+/* (array[j] > array[j+1]).                        */
+/***************************************************/
+
 
 
 
