@@ -62,24 +62,13 @@ int main(int argc, char** argv) {
     printf("%d \t", perm[j]);
   printf("\n");
 
-  ret = InsertSort(perm, 0, tamano - 1);
+  ret = MergeSort(copia, 0, tamano - 1);
   if (ret == ERR) {
-    printf("Error: Error in InsertSort\n");
+    printf("Error: Error in MergeSort\n");
     free(perm); free(copia);
     exit(-1);
   }
-  printf("InsertSort (OB = %d):\n", ret);
-  for (j = 0; j < tamano; j++)
-    printf("%d \t", perm[j]);
-  printf("\n");
-
-  ret = BubbleSort(copia, 0, tamano - 1);
-  if (ret == ERR) {
-    printf("Error: Error in BubbleSort\n");
-    free(perm); free(copia);
-    exit(-1);
-  }
-  printf("BubbleSort (OB = %d):\n", ret);
+  printf("MergeSort (OB = %d):\n", ret);
   for (j = 0; j < tamano; j++)
     printf("%d \t", copia[j]);
   printf("\n");

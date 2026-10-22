@@ -29,6 +29,7 @@ int main(int argc, char** argv)
   char nombre[256] = "";
   char fichero_insert[300] = "";
   char fichero_bubble[300] = "";
+  char fichero_merge[300] = "";
   short ret;
 
   srand(SEED);
@@ -73,8 +74,9 @@ int main(int argc, char** argv)
   }
 
   /* Formatear nombres de ficheros de salida distintos */
-  sprintf(fichero_insert, "insert_%s", nombre);
-  sprintf(fichero_bubble, "bubble_%s", nombre);
+   sprintf(fichero_insert, "insert_%s", nombre);
+   sprintf(fichero_bubble, "bubble_%s", nombre);
+   sprintf(fichero_merge,  "merge_%s",  nombre);
 
   /* Medición 1: InsertSort */
   printf("Calculando tiempos para InsertSort...\n");
@@ -91,6 +93,15 @@ int main(int argc, char** argv)
   ret = generate_sorting_times(BubbleSort, fichero_bubble, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de BubbleSort\n");
+    exit(-1); 
+  }
+
+  /* Medición 1: MergeSort */
+  printf("Calculando tiempos para MergeSort...\n");
+  srand(SEED); /* misma secuencia de rand() que InsertSort */
+  ret = generate_sorting_times(MergeSort, fichero_bubble, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de MergeSort\n");
     exit(-1); 
   }
 
