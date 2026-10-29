@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     fprintf(stderr, "%s -size <int>\n", argv[0]);
     fprintf(stderr, "Where:\n");
     fprintf(stderr, " -size : number of elements in the permutation.\n");
-    return 0;
+    return -1;
   }
   printf("Practice number 1, section 4 (and 6)\n");
   printf("Done by: Ziqi y Josemi\n");

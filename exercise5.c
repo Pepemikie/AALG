@@ -99,7 +99,7 @@ int main(int argc, char** argv)
   /* Medición 1: MergeSort */
   printf("Calculando tiempos para MergeSort...\n");
   srand(SEED); /* misma secuencia de rand() que InsertSort */
-  ret = generate_sorting_times(MergeSort, fichero_bubble, num_min, num_max, incr, n_perms);
+  ret = generate_sorting_times(MergeSort, fichero_merge, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de MergeSort\n");
     exit(-1); 

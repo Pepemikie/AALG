@@ -140,6 +140,7 @@ int merge(int *array, int ip, int iu, int im)
   parray = malloc((iu - ip + 1) * sizeof(int));
   if (parray == NULL)
   {
+    fprintf(stderr, "merge: error de reserva de memoria\n");
     return ERR;
   }
 

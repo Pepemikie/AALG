@@ -39,7 +39,7 @@ sorting.o : sorting.c sorting.h
 	@echo "# Has changed $<"
 	$(CC) $(CFLAGS) -c $<
 
- times.o : times.c times.h
+times.o : times.c times.h
 	@echo "#---------------------------"
 	@echo "# Generating $@ "
 	@echo "# Depepends on $^"
@@ -64,7 +64,7 @@ exercise4_test:
 
 exercise5_test:
 	@echo Running exercise5
-	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
+	@./exercise5 -num_min 100 -num_max 2000 -incr 100 -numP 100 -outputFile resultados.dat
 
 valgrind_exercise1:
 	@echo Running valgrind on exercise1
