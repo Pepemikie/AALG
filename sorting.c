@@ -175,6 +175,7 @@ int merge(int *array, int ip, int iu, int im)
   return cont;
 }
 
+
 /***************************************************/
 /* Function: QuickSort     Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
@@ -198,6 +199,12 @@ int QuickSort_min(int *array, int ip, int iu)
   if (ip == iu)
   {
     return OK;
+  }
+
+  funpivot = pivot_min(array, ip, iu, &pos);
+  if (funpivot != 0)
+  {
+    return ERR;
   }
 
   middle = partition(array, ip, iu, &pos, funpivot);
@@ -225,11 +232,6 @@ int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
   if (array == NULL || ip < 0 || iu < 0 || pos == NULL)
   {
     return 0;
-  }
-
-  if (pivot_min(array, ip, iu, pos) != 0)
-  {
-    return ERR;
   }
 
   M = array[*pos];
