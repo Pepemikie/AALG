@@ -11,6 +11,7 @@
 
 #include "sorting.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /***************************************************/
 /* Function: InsertSort    Date: 05/10/2026        */
@@ -106,7 +107,7 @@ int MergeSort(int *array, int ip, int iu)
     return 0;
   }
 
-  im=(ip+iu)/2;
+  im = ip + (iu - ip) / 2;
   
   c1 = MergeSort(array, ip, im);
   if (c1 == ERR)
@@ -133,7 +134,7 @@ int merge(int *array, int ip, int iu, int im)
   int *parray = NULL;
   int i = ip, j = im + 1, k = 0, cont = 0;
 
-  if (array == NULL || ip < 0 || iu < 0 || iu < ip){
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || im < ip || im > iu){
     return ERR;
   }
 
@@ -175,121 +176,111 @@ int merge(int *array, int ip, int iu, int im)
   return cont;
 }
 
-
 /***************************************************/
-/* Function: QuickSort     Date: 22/10/2026        */
+/* Function: QuickSort_min   Date: 22/10/2026      */
 /* Authors: Ziqi y Josemi                          */
+/* Ordena array[ip..iu] con QuickSort, pivote = 1er*/
+/* elemento. Devuelve ERR o el numero de OB.       */
 /***************************************************/
 int QuickSort_min(int *array, int ip, int iu)
 {
-  int middle;
-  int pos;
-  pfunc_pivot funpivot = NULL;
+  int pos = 0, c1 = 0, c2 = 0, c3 = 0;
 
-  if (array == NULL)
-  {
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
     return ERR;
-  }
-
-  if (ip < 0 || iu < 0 || ip > iu)
-  {
-    return ERR;
-  }
 
   if (ip == iu)
-  {
-    return OK;
-  }
+    return 0;
 
-  funpivot = pivot_min(array, ip, iu, &pos);
-  if (funpivot != 0)
-  {
+  c1 = partition(array, ip, iu, &pos, pivot_min);
+  if (c1 == ERR)
     return ERR;
+
+  if (ip < pos - 1)
+  {
+    c2 = QuickSort_min(array, ip, pos - 1);
+    if (c2 == ERR)
+      return ERR;
   }
 
-  middle = partition(array, ip, iu, &pos, funpivot);
-  if(middle == -1) {
-    return ERR;
-  }
-  if (ip < middle -1) {
-    QuickSort_min(array, ip, middle-1);
-  }
-  else if (middle +1 < iu) {
-    QuickSort_min(array, middle+1, iu);
+  if (pos + 1 < iu)
+  {
+    c3 = QuickSort_min(array, pos + 1, iu);
+    if (c3 == ERR)
+      return ERR;
   }
 
-  return OK;
+  return c1 + c2 + c3;
 }
 
 /***************************************************/
 /* Function: partition     Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
+/* Elige el pivote con la funcion pivot, lo coloca */
+/* en su posicion final (*pos) y deja menores a su */
+/* izquierda y mayores a su derecha. Devuelve ERR o*/
+/* comparaciones del selector + de la particion.   */
 /***************************************************/
 int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 {
-  short M;
-  int i;
-  if (array == NULL || ip < 0 || iu < 0 || pos == NULL)
-  {
-    return 0;
-  }
+  int m, k, i, cont = 0, cp;
 
-  M = array[*pos];
-
-  if(swap(array, ip, *pos) == -1) 
-  {
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || pos == NULL ||
+      pivot == NULL)
     return ERR;
-  }
 
-  pos = &ip;
+  cp = pivot(array, ip, iu, pos);
+  if (cp == ERR || *pos < ip || *pos > iu)
+    return ERR;
+  cont = cp;
 
-  for (i = ip + 1; i < iu; i++) {
-    if (array[i] < M) 
+  m = array[*pos];
+  if (swap(array, ip, *pos) == ERR)
+    return ERR;
+
+  k = ip;
+  for (i = ip + 1; i <= iu; i++)
+  {
+    cont++;
+    if (array[i] < m)
     {
-      M++;
-      if (swap(array, i, M) == -1) 
-      {
+      k++;
+      if (swap(array, i, k) == ERR)
         return ERR;
-      }
     }
   }
 
-  if (swap(array, ip, M) == -1)
-  {
+  if (swap(array, ip, k) == ERR)
     return ERR;
-  }
 
-  return M;
+  *pos = k;
+  return cont;
 }
 
 /***************************************************/
 /* Function: pivot_min     Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
+/* Pivote = primer elemento. No compara claves.    */
 /***************************************************/
 int pivot_min(int *array, int ip, int iu, int *pos)
 {
-  if (array == NULL || ip < 0 || iu < 0 || pos == NULL)
-  {
-    return -1;
-  }
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || pos == NULL)
+    return ERR;
 
-  pos = &ip;
-
+  *pos = ip;
   return 0;
 }
-
 
 /***************************************************/
 /* Function: swap          Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
 /***************************************************/
-int swap(int *array, int p1, int p2) {
+int swap(int *array, int p1, int p2)
+{
   int aux;
-  if (array == NULL || p1 < 0 || p2 < 0) 
-  {
-    return -1;
-  }
-      
+  if (array == NULL || p1 < 0 || p2 < 0)
+    return ERR;
+
   aux = array[p1];
   array[p1] = array[p2];
   array[p2] = aux;

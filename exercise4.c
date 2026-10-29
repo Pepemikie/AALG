@@ -18,7 +18,7 @@
 
 int main(int argc, char** argv) {
   int tamano = 0, i, j, ret = 0;
-  int *perm = NULL, *copia = NULL;
+  int *perm = NULL, *copia = NULL, *copia2 = NULL;
 
   srand(time(NULL));
 
@@ -49,13 +49,14 @@ int main(int argc, char** argv) {
   }
 
   copia = (int *)malloc(tamano * sizeof(int));
-  if (copia == NULL) {
+  copia2 = (int *)malloc(tamano * sizeof(int));
+  if (copia == NULL || copia2 == NULL) {
     printf("Error: Out of memory\n");
-    free(perm);
+    free(perm); free(copia); free(copia2);
     exit(-1);
   }
   for (j = 0; j < tamano; j++)
-    copia[j] = perm[j];
+    copia[j] = copia2[j] = perm[j];
 
   printf("Original:\n");
   for (j = 0; j < tamano; j++)
@@ -73,7 +74,19 @@ int main(int argc, char** argv) {
     printf("%d \t", copia[j]);
   printf("\n");
 
+  ret = QuickSort_min(copia2, 0, tamano - 1);
+  if (ret == ERR) {
+    printf("Error: Error in QuickSort_min\n");
+    free(perm); free(copia); free(copia2);
+    exit(-1);
+  }
+  printf("QuickSort_min (OB = %d):\n", ret);
+  for (j = 0; j < tamano; j++)
+    printf("%d \t", copia2[j]);
+  printf("\n");
+
   free(perm);
   free(copia);
+  free(copia2);
   return 0;
 }
