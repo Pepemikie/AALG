@@ -17,6 +17,7 @@ cleanpng:
 	rm -f *.png
 
 cleanall: clean cleanpng
+	rm -f *.dat
 
 $(EXE) : % : %.o sorting.o times.o permutations.o
 	@echo "#---------------------------"
@@ -85,3 +86,5 @@ valgrind_exercise4:
 valgrind_exercise5:
 	@echo Running valgrind on exercise5
 	@valgrind --leak-check=full -s ./exercise5 -num_min 10 -num_max 50 -incr 10 -numP 5 -outputFile resultados.dat
+graficas: exercise5_test
+	@gnuplot graficas.gp

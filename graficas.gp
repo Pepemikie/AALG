@@ -1,88 +1,72 @@
-/***********************************************************/
-/* Program: exercise5                  Date: 2026          */
-/* Authors: Ziqi y Josemi                                  */
-/*                                                         */
-/* Program that writes in a file the average times         */
-/* of the sorting algorithms (MergeSort y variantes de QuickSort)     */
-/*                                                         */
-/* Input: Command Line                                     */
-/* -num_min: lowest number of table elements               */
-/* -num_max: highest number of table elements              */
-/* -incr: increment                                        */
-/* -numP: number of permutations to average                */
-/* -outputFile: Output file name base                      */
-/* Output: 0: OK, -1: ERR                                  */
-/***********************************************************/
+# Formato de los .dat (6 columnas): 1=N 2=n_elems 3=time(s) 4=average_ob 5=min_ob 6=max_ob
+set terminal pngcairo size 900,650 font "Arial,10"
+set grid
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-#include "sorting.h"
-#include "times.h"
+# ============ Tiempos medios de CPU (columna 3) ============
+set output "comparativa_tiempos_real.png"
+set title "Tiempo medio de CPU por permutación (MergeSort)"
+set xlabel "Tamaño de la permutación N (elementos)"
+set ylabel "Tiempo medio de CPU (s)"
+plot "merge_resultados.dat" using 1:3 with linespoints lw 2 title "MergeSort"
 
-#define SEED 12345 /* semilla fija: reproducible */
+# Misma gráfica con eje Y logarítmico
+set output "comparativa_tiempos_log.png"
+set title "Tiempo medio de CPU (escala logarítmica en Y)"
+set logscale y
+plot "merge_resultados.dat" using 1:3 with linespoints lw 2 title "MergeSort"
+unset logscale y
 
-int main(int argc, char** argv)
-{
-  int i, num_min = 0, num_max = 0, incr = 0, n_perms = 0;
-  char nombre[256] = "";
-  char fichero_merge[300] = "";
-  short ret;
+# ============ OB media (columna 4) ============
+set output "comparativa_operaciones_medias.png"
+set title "Número medio de ejecuciones de la OB"
+set xlabel "Tamaño de la permutación N (elementos)"
+set ylabel "Ejecuciones medias de la OB (comparaciones)"
+plot "merge_resultados.dat" using 1:4 with linespoints lw 2 title "MergeSort"
 
-  srand(SEED);
+set output "comparativa_operaciones_log.png"
+set title "Número medio de ejecuciones de la OB (escala logarítmica en Y)"
+set logscale y
+plot "merge_resultados.dat" using 1:4 with linespoints lw 2 title "MergeSort"
+unset logscale y
 
-  if (argc != 11) {
-    fprintf(stderr, "Error in input parameters:\n\n");
-    fprintf(stderr, "%s -num_min <int> -num_max <int> -incr <int>\n", argv[0]);
-    fprintf(stderr, "\t\t -numP <int> -outputFile <string> \n");
-    fprintf(stderr, "Donde:\n");
-    fprintf(stderr, "-num_min: lowest number of table elements\n");
-    fprintf(stderr, "-num_max: highest number of table elements\n");
-    fprintf(stderr, "-incr: increment\n");
-    fprintf(stderr, "-numP: number of permutations to average\n");
-    fprintf(stderr, "-outputFile: Output file name\n");
-    exit(-1);
-  }
+# ============ Media, mínimo y máximo de la OB ============
+set autoscale y
+set ylabel "Ejecuciones de la OB (comparaciones)"
 
-  printf("Practice number 1, sections 5 & 6\n");
-  printf("Done by: Ziqi y Josemi\n");
-  printf("Group: 1272/1202\n");
-  
-  /* check command line */
-  for(i = 1; i < argc ; i++) {
-    if (strcmp(argv[i], "-num_min") == 0) {
-      num_min = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-num_max") == 0) {
-      num_max = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-incr") == 0) {
-      incr = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-numP") == 0) {
-      n_perms = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-outputFile") == 0) {
-      if (strlen(argv[++i]) > 200) {
-        fprintf(stderr, "Output file name too long\n");
-        exit(-1);
-      }
-      strcpy(nombre, argv[i]);
-    } else {
-      fprintf(stderr, "Wrong parameter %s\n", argv[i]);
-      exit(-1);
-    }
-  }
+set output "ops_merge.png"
+set title "MergeSort: ejecuciones de la OB (media, mínimo y máximo)"
+plot "merge_resultados.dat" using 1:4 with lines lw 2 lt rgb "blue" title "Media", \
+     "merge_resultados.dat" using 1:5 with lines lt rgb "green" title "Mínimo", \
+     "merge_resultados.dat" using 1:6 with lines lt rgb "red" title "Máximo"
 
-  /* Formatear nombres de ficheros de salida distintos */
-   sprintf(fichero_merge,  "merge_%s",  nombre);
+# ============ AJUSTES DE CURVAS: MergeSort ============
+# Modelo teórico: comparaciones ~ a * n * ln(n); tiempo de CPU ~ b * n * ln(n)
+# (columna 4 = OB media, columna 3 = tiempo de CPU medido con clock(), NO tiempo de pared)
+# Intervalo de ajuste: ajustad LO y HI a vuestro num_min y num_max
+LO = 100
+HI = 2000
 
-  /* Medición: MergeSort */
-  printf("Calculando tiempos para MergeSort...\n");
-  srand(SEED); /* misma secuencia de permutaciones para todos los metodos */
-  ret = generate_sorting_times(MergeSort, fichero_merge, num_min, num_max, incr, n_perms);
-  if (ret == ERR) { 
-    fprintf(stderr, "Error en la generación de tiempos de MergeSort\n");
-    exit(-1); 
-  }
+set fit logfile "fit_merge.log"
 
-  printf("Correct output: Archivos generados con éxito.\n");
-  return 0;
-}
+f_ob(x)   = a * x * log(x)
+f_time(x) = b * x * log(x)
+a = 1
+b = 1e-7
+
+fit [LO:HI] f_ob(x)   "merge_resultados.dat" using 1:4 via a
+fit [LO:HI] f_time(x) "merge_resultados.dat" using 1:3 via b
+
+set autoscale y
+set xlabel "Tamaño de la permutación N (elementos)"
+
+set output "fit_merge_ob.png"
+set title sprintf("MergeSort: ajuste de la OB media  (a = %.4f, ajuste en [%d,%d])", a, LO, HI)
+set ylabel "Ejecuciones medias de la OB (comparaciones)"
+plot "merge_resultados.dat" using 1:4 with points pt 7 title "Datos medidos", \
+     f_ob(x) with lines lw 2 lt rgb "red" title "a*n*ln(n)"
+
+set output "fit_merge_time.png"
+set title sprintf("MergeSort: ajuste del tiempo medio de CPU  (b = %.3e, ajuste en [%d,%d])", b, LO, HI)
+set ylabel "Tiempo medio de CPU (s)"
+plot "merge_resultados.dat" using 1:3 with points pt 7 title "Datos medidos", \
+     f_time(x) with lines lw 2 lt rgb "red" title "b*n*ln(n)"
