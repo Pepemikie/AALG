@@ -32,8 +32,8 @@ int BubbleSort(int* array, int ip, int iu);
 int InsertSort(int* array, int ip, int iu);
 int MergeSort(int* array, int ip, int iu);
 int merge(int* array, int ip, int iu, int im);
-short QuickSort_min(int* array, int ip, int iu);
-short partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot);
+int QuickSort_min(int* array, int ip, int iu);
+int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot);
 int pivot_min(int* array, int ip, int iu, int* pos);
 int swap(int *array, int p1, int p2);
 

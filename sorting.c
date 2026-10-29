@@ -179,7 +179,7 @@ int merge(int *array, int ip, int iu, int im)
 /* Function: QuickSort     Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
 /***************************************************/
-short QuickSort_min(int *array, int ip, int iu)
+int QuickSort_min(int *array, int ip, int iu)
 {
   int middle;
   int pos;
@@ -218,7 +218,7 @@ short QuickSort_min(int *array, int ip, int iu)
 /* Function: partition     Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
 /***************************************************/
-short partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
+int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 {
   short M;
   int i;
