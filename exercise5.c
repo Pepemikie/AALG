@@ -3,7 +3,7 @@
 /* Authors: Ziqi y Josemi                                  */
 /*                                                         */
 /* Program that writes in a file the average times         */
-/* of the sorting algorithms (InsertSort & BubbleSort)     */
+/* of the sorting algorithms (MergeSort y variantes de QuickSort)     */
 /*                                                         */
 /* Input: Command Line                                     */
 /* -num_min: lowest number of table elements               */
@@ -27,8 +27,6 @@ int main(int argc, char** argv)
 {
   int i, num_min = 0, num_max = 0, incr = 0, n_perms = 0;
   char nombre[256] = "";
-  char fichero_insert[300] = "";
-  char fichero_bubble[300] = "";
   char fichero_merge[300] = "";
   short ret;
 
@@ -74,31 +72,11 @@ int main(int argc, char** argv)
   }
 
   /* Formatear nombres de ficheros de salida distintos */
-   sprintf(fichero_insert, "insert_%s", nombre);
-   sprintf(fichero_bubble, "bubble_%s", nombre);
    sprintf(fichero_merge,  "merge_%s",  nombre);
 
-  /* Medición 1: InsertSort */
-  printf("Calculando tiempos para InsertSort...\n");
-  srand(SEED); /* mismas permutaciones para ambos metodos */
-  ret = generate_sorting_times(InsertSort, fichero_insert, num_min, num_max, incr, n_perms);
-  if (ret == ERR) { 
-    fprintf(stderr, "Error en la generación de tiempos de InsertSort\n");
-    exit(-1); 
-  }
-
-  /* Medición 2: BubbleSort */
-  printf("Calculando tiempos para BubbleSort...\n");
-  srand(SEED); /* misma secuencia de rand() que InsertSort */
-  ret = generate_sorting_times(BubbleSort, fichero_bubble, num_min, num_max, incr, n_perms);
-  if (ret == ERR) { 
-    fprintf(stderr, "Error en la generación de tiempos de BubbleSort\n");
-    exit(-1); 
-  }
-
-  /* Medición 1: MergeSort */
+  /* Medición: MergeSort */
   printf("Calculando tiempos para MergeSort...\n");
-  srand(SEED); /* misma secuencia de rand() que InsertSort */
+  srand(SEED); /* misma secuencia de permutaciones para todos los metodos */
   ret = generate_sorting_times(MergeSort, fichero_merge, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de MergeSort\n");

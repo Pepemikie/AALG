@@ -84,6 +84,4 @@ valgrind_exercise4:
 
 valgrind_exercise5:
 	@echo Running valgrind on exercise5
-	@valgrind --leak-check=full -s ./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
-graficas: exercise5_test
-	@gnuplot graficas.gp
+	@valgrind --leak-check=full -s ./exercise5 -num_min 10 -num_max 50 -incr 10 -numP 5 -outputFile resultados.dat
