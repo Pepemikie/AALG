@@ -119,7 +119,7 @@ short generate_sorting_times(pfunc_sort method, char *file,
   if (!method || !file || num_min <= 0 || num_max < num_min ||
       incr <= 0 || n_perms <= 0)
     return ERR;
-
+  
   num = (num_max - num_min) / incr + 1;
 
   times = malloc(num * sizeof(*times));

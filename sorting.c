@@ -108,7 +108,7 @@ int MergeSort(int *array, int ip, int iu)
   }
 
   im = ip + (iu - ip) / 2;
-  
+
   c1 = MergeSort(array, ip, im);
   if (c1 == ERR)
     return ERR;
@@ -134,7 +134,8 @@ int merge(int *array, int ip, int iu, int im)
   int *parray = NULL;
   int i = ip, j = im + 1, k = 0, cont = 0;
 
-  if (array == NULL || ip < 0 || iu < 0 || iu < ip || im < ip || im > iu){
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || im < ip || im > iu)
+  {
     return ERR;
   }
 
@@ -286,4 +287,145 @@ int swap(int *array, int p1, int p2)
   array[p2] = aux;
 
   return 0;
+}
+
+/***************************************************/
+/* Function: QuickSort_mean    Date: 12/11/2026    */
+/* Authors: Ziqi y Josemi                          */
+/* Ordena array[ip..iu] con QuickSort, pivote =    */
+/* mediana de 3. Devuelve ERR o el numero de OB.   */
+/***************************************************/
+int QuickSort_mean(int *array, int ip, int iu)
+{
+
+  int pos = 0, c1 = 0, c2 = 0, c3 = 0;
+
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
+    return ERR;
+
+  if (ip == iu)
+    return 0;
+
+  c1 = partition(array, ip, iu, &pos, pivot_mean);
+  if (c1 == ERR)
+    return ERR;
+
+  if (ip < pos - 1)
+  {
+    c2 = QuickSort_mean(array, ip, pos - 1);
+    if (c2 == ERR)
+      return ERR;
+  }
+
+  if (pos + 1 < iu)
+  {
+    c3 = QuickSort_mean(array, pos + 1, iu);
+    if (c3 == ERR)
+      return ERR;
+  }
+
+  return c1 + c2 + c3;
+}
+
+/***************************************************/
+/* Function: pivot_mean    Date: 22/10/2026        */
+/* Authors: Ziqi y Josemi                          */
+/* Pivote = primer elemento. No compara claves.    */
+/***************************************************/
+int pivot_mean(int *array, int ip, int iu, int *pos)
+{
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || pos == NULL)
+    return ERR;
+
+  *pos = ip + (iu - ip) / 2;
+  return 0;
+}
+
+/***************************************************/
+/* Function: pivot_median  Date: 12/11/2026        */
+/* Authors: Ziqi y Josemi                          */
+/* Pivote = mediana de array[ip], array[im] y      */
+/* array[iu], con im = ip + (iu-ip)/2. Guarda en   */
+/* *pos el indice de la mediana. Devuelve ERR o el */
+/* numero de comparaciones de claves (2 o 3).      */
+/***************************************************/
+int pivot_median(int *array, int ip, int iu, int *pos)
+{
+  int im, a, b, c, cont = 0;
+
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip || pos == NULL)
+    return ERR;
+
+  im = ip + (iu - ip) / 2;
+  a = array[ip];
+  b = array[im];
+  c = array[iu];
+
+  cont++;
+  if (a < b)
+  {
+    cont++;
+    if (b < c)
+    {
+      *pos = im; /* a < b < c */
+    }
+    else
+    {
+      cont++;
+      *pos = (a < c) ? iu : ip; /* a < c <= b  |  c <= a < b */
+    }
+  }
+  else
+  {
+    cont++;
+    if (a < c)
+    {
+      *pos = ip; /* b <= a < c */
+    }
+    else
+    {
+      cont++;
+      *pos = (b < c) ? iu : im; /* b < c <= a  |  c <= b <= a */
+    }
+  }
+
+  return cont;
+}
+
+/***************************************************/
+/* Function: QuickSort_median  Date: 12/11/2026    */
+/* Authors: Ziqi y Josemi                          */
+/* Ordena array[ip..iu] con QuickSort, pivote =    */
+/* mediana de 3. Devuelve ERR o el numero de OB.   */
+/***************************************************/
+int QuickSort_median(int *array, int ip, int iu)
+{
+
+  int pos = 0, c1 = 0, c2 = 0, c3 = 0;
+
+  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
+    return ERR;
+
+  if (ip == iu)
+    return 0;
+
+  c1 = partition(array, ip, iu, &pos, pivot_median);
+  if (c1 == ERR)
+    return ERR;
+
+  if (ip < pos - 1)
+  {
+    c2 = QuickSort_median(array, ip, pos - 1);
+    if (c2 == ERR)
+      return ERR;
+  }
+
+  if (pos + 1 < iu)
+  {
+    c3 = QuickSort_median(array, pos + 1, iu);
+    if (c3 == ERR)
+      return ERR;
+  }
+
+  return c1 + c2 + c3;
 }

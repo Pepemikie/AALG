@@ -28,6 +28,9 @@ int main(int argc, char** argv)
   int i, num_min = 0, num_max = 0, incr = 0, n_perms = 0;
   char nombre[256] = "";
   char fichero_merge[300] = "";
+  char fichero_quick_min[300] = "";
+  char fichero_quick_mean[300] = "";
+  char fichero_quick_median[300] = "";
   short ret;
 
   srand(SEED);
@@ -80,6 +83,33 @@ int main(int argc, char** argv)
   ret = generate_sorting_times(MergeSort, fichero_merge, num_min, num_max, incr, n_perms);
   if (ret == ERR) { 
     fprintf(stderr, "Error en la generación de tiempos de MergeSort\n");
+    exit(-1); 
+  }
+
+  sprintf(fichero_quick_min,  "quick_min_%s",  nombre);
+  printf("Calculando tiempos para QuickSort_min...\n");
+  srand(SEED); /* misma secuencia de permutaciones para todos los metodos */
+  ret = generate_sorting_times(QuickSort_min, fichero_quick_min, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de QuickSort_min\n");
+    exit(-1); 
+  }
+
+  sprintf(fichero_quick_mean,  "quick_mean_%s",  nombre);
+  printf("Calculando tiempos para QuickSort_mean...\n");
+  srand(SEED); /* misma secuencia de permutaciones para todos los metodos */
+  ret = generate_sorting_times(QuickSort_mean, fichero_quick_mean, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de QuickSort_mean\n");
+    exit(-1); 
+  }
+
+  sprintf(fichero_quick_median,  "quick_median_%s",  nombre);
+  printf("Calculando tiempos para QuickSort_median...\n");
+  srand(SEED); /* misma secuencia de permutaciones para todos los metodos */
+  ret = generate_sorting_times(QuickSort_median, fichero_quick_median, num_min, num_max, incr, n_perms);
+  if (ret == ERR) { 
+    fprintf(stderr, "Error en la generación de tiempos de QuickSort_median\n");
     exit(-1); 
   }
 

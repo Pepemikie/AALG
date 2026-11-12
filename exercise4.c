@@ -74,17 +74,6 @@ int main(int argc, char** argv) {
     printf("%d \t", copia[j]);
   printf("\n");
 
-  ret = QuickSort_min(copia2, 0, tamano - 1);
-  if (ret == ERR) {
-    printf("Error: Error in QuickSort_min\n");
-    free(perm); free(copia); free(copia2);
-    exit(-1);
-  }
-  printf("QuickSort_min (OB = %d):\n", ret);
-  for (j = 0; j < tamano; j++)
-    printf("%d \t", copia2[j]);
-  printf("\n");
-
   free(perm);
   free(copia);
   free(copia2);
