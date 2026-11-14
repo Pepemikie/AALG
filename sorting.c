@@ -187,10 +187,10 @@ int QuickSort_min(int *array, int ip, int iu)
 {
   int pos = 0, c1 = 0, c2 = 0, c3 = 0;
 
-  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip - 1)
     return ERR;
 
-  if (ip == iu)
+  if (iu < ip || ip == iu) /* segmento vacio o de un elemento */
     return 0;
 
   c1 = partition(array, ip, iu, &pos, pivot_min);
@@ -293,17 +293,17 @@ int swap(int *array, int p1, int p2)
 /* Function: QuickSort_mean    Date: 12/11/2026    */
 /* Authors: Ziqi y Josemi                          */
 /* Ordena array[ip..iu] con QuickSort, pivote =    */
-/* mediana de 3. Devuelve ERR o el numero de OB.   */
+/* elemento central. Devuelve ERR o el numero de OB.*/
 /***************************************************/
 int QuickSort_mean(int *array, int ip, int iu)
 {
 
   int pos = 0, c1 = 0, c2 = 0, c3 = 0;
 
-  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip - 1)
     return ERR;
 
-  if (ip == iu)
+  if (iu < ip || ip == iu) /* segmento vacio o de un elemento */
     return 0;
 
   c1 = partition(array, ip, iu, &pos, pivot_mean);
@@ -330,7 +330,7 @@ int QuickSort_mean(int *array, int ip, int iu)
 /***************************************************/
 /* Function: pivot_mean    Date: 22/10/2026        */
 /* Authors: Ziqi y Josemi                          */
-/* Pivote = primer elemento. No compara claves.    */
+/* Pivote = elemento central. No compara claves.   */
 /***************************************************/
 int pivot_mean(int *array, int ip, int iu, int *pos)
 {
@@ -403,10 +403,10 @@ int QuickSort_median(int *array, int ip, int iu)
 
   int pos = 0, c1 = 0, c2 = 0, c3 = 0;
 
-  if (array == NULL || ip < 0 || iu < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip - 1)
     return ERR;
 
-  if (ip == iu)
+  if (iu < ip || ip == iu) /* segmento vacio o de un elemento */
     return 0;
 
   c1 = partition(array, ip, iu, &pos, pivot_median);

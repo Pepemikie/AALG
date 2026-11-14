@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 #include "sorting.h"
 #include "times.h"
 
@@ -33,8 +32,6 @@ int main(int argc, char** argv)
   char fichero_quick_median[300] = "";
   short ret;
 
-  srand(SEED);
-
   if (argc != 11) {
     fprintf(stderr, "Error in input parameters:\n\n");
     fprintf(stderr, "%s -num_min <int> -num_max <int> -incr <int>\n", argv[0]);
@@ -48,12 +45,16 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  printf("Practice number 1, sections 5 & 6\n");
+  printf("Practice number 2, sections 2 & 6\n");
   printf("Done by: Ziqi y Josemi\n");
   printf("Group: 1272/1202\n");
   
   /* check command line */
   for(i = 1; i < argc ; i++) {
+    if (i + 1 >= argc) {
+      fprintf(stderr, "Missing value for %s\n", argv[i]);
+      exit(-1);
+    }
     if (strcmp(argv[i], "-num_min") == 0) {
       num_min = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-num_max") == 0) {

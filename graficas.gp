@@ -1,5 +1,6 @@
 # Formato de los .dat (6 columnas): 1=N 2=n_elems 3=time(s) 4=average_ob 5=min_ob 6=max_ob
 set terminal pngcairo size 900,650 font "Arial,10"
+set termoption noenhanced
 set grid
 
 # ---------- Configuración ----------
@@ -65,7 +66,7 @@ do for [i=1:NALG] {
 
   # reiniciar valores iniciales para que un ajuste no contamine al siguiente
   a = 1
-  b = 1e-7
+  b = 1e-8
   fit [LO:HI] f_ob(x)   file(i) using 1:4 via a
   fit [LO:HI] f_time(x) file(i) using 1:3 via b
 
