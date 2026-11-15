@@ -1,11 +1,10 @@
 #-----------------------
-# IMPORTANTE: The values of the parameters for exercise?_test have to be conveniently adjusted.
-# It is assumed that the name of the source files is exercise1.c, exercise2.c,...,exercise.h
+# Makefile Práctica 2 - Ziqi Zhoulin y José Miguel Romero Oubiña
 #-----------------------
 
 CC = gcc -ansi -pedantic
 CFLAGS = -Wall
-EXE = exercise1 exercise2 exercise3 exercise4 exercise5
+EXE = exercise4 exercise5
 
 all : $(EXE)
 
@@ -46,18 +45,6 @@ times.o : times.c times.h
 	@echo "# Depepends on $^"
 	@echo "# Has changed $<"
 	$(CC) $(CFLAGS) -c $<
-	
-exercise1_test:
-	@echo Running exercise1
-	@./exercise1 -limInf 1 -limSup 5 -numN 10
-
-exercise2_test:
-	@echo Running exercise2
-	@./exercise2 -size 5 -numP 5
-
-exercise3_test:
-	@echo Running exercise3
-	@./exercise3 -size 5 -numP 5
 
 exercise4_test:
 	@echo Running exercise4
@@ -66,18 +53,6 @@ exercise4_test:
 exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 100 -num_max 2000 -incr 100 -numP 100 -outputFile resultados.dat
-
-valgrind_exercise1:
-	@echo Running valgrind on exercise1
-	@valgrind --leak-check=full -s ./exercise1 -limInf 1 -limSup 5 -numN 10
-
-valgrind_exercise2:
-	@echo Running valgrind on exercise2
-	@valgrind --leak-check=full -s ./exercise2 -size 5 -numP 5
-
-valgrind_exercise3:
-	@echo Running valgrind on exercise3
-	@valgrind --leak-check=full -s ./exercise3 -size 5 -numP 5
 
 valgrind_exercise4:
 	@echo Running valgrind on exercise4
