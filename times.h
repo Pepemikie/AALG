@@ -21,6 +21,9 @@ typedef struct {
     int max_ob;         /* Maximum basic-operation count. */
 } TIME_AA, *PTIME_AA;
 
+typedef int (* pfunc_sort)(int*, int, int);
+typedef int (*pfunc_pivot)(int*, int, int, int*);
+
 /**
  * Measures search performance across a range of dictionary sizes and writes
  * one result row per size to file.
