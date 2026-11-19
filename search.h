@@ -18,7 +18,7 @@
 #define SORTED 1
 #define NOT_SORTED 0
 
-typedef struct dictionary {
+typedef struct {
     int size;
     int n_data;
     char order;
