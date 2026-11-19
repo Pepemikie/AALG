@@ -14,11 +14,11 @@
 #endif
 
 #define NOT_FOUND -2
-
 #define SORTED 1
 #define NOT_SORTED 0
 
-typedef struct {
+typedef struct
+{
     int size;
     int n_data;
     char order;

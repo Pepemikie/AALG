@@ -3,9 +3,9 @@
  * Descripcion: Implementation of time measurement functions
  *
  * Fichero: times.c
- * Autor: Carlos Aguirre Maeso
+ * Autor: Jose Miguel y Ziqi Zhoulin
  * Version: 1.0
- * Fecha: 16-09-2019
+ * Fecha: 19-11-2026
  *
  */
 
@@ -15,129 +15,137 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
-/***************************************************/
-/* Function: average_sorting_time  Date: 09/10/2026*/
-/* Authors: Ziqi y Josemi                          */
-/* Ordena n_perms permutaciones de tamaño N con    */
-/* method y guarda en ptime el tiempo medio de CPU */
-/* y la OB media, minima y maxima.                 */
-/* Devuelve OK o ERR.                              */
-/***************************************************/
-
-short average_sorting_time(pfunc_sort metodo,
-                           int n_perms,
-                           int N,
-                           PTIME_AA ptime)
+short average_search_time(pfunc_search method,
+                          char order,
+                          int size,
+                          int n_perms,
+                          pfunc_key_generator generator,
+                          int n_keys,
+                          PTIME_AA ptime)
 {
   int **perms = NULL;
-  double average_ob = 0.0;
-  int min_ob = 0, max_ob = 0;
+  PDICT *dicts = NULL;
+  int *keys = NULL;
+  short status = ERR;
+  int i, j, pos, ret;
+  int min_ob = 0, max_ob = 0, first = 1;
+  double total_ob = 0.0;
   clock_t ini, fin;
-  int ret;
-  int i, j;
 
-  if (!metodo || n_perms <= 0 || N <= 0 || !ptime)
-  {
+  if (!method || !generator || !ptime || size <= 0 || n_perms <= 0 ||
+      n_keys <= 0 || (order != SORTED && order != NOT_SORTED) ||
+      n_perms > INT_MAX / n_keys)
     return ERR;
-  }
 
-  perms = generate_permutations(n_perms, N);
+  perms = generate_permutations(n_perms, size);
   if (perms == NULL)
     return ERR;
 
-  ini = clock();
-  if (ini == (clock_t)-1)
-  {
-    for (i = 0; i < n_perms; i++)
-      free(perms[i]);
-    free(perms);
-    return ERR;
-  }
+  dicts = calloc(n_perms, sizeof(*dicts));
+  if (dicts == NULL)
+    goto cleanup;
 
   for (i = 0; i < n_perms; i++)
   {
-    ret = metodo(perms[i], 0, N - 1);
-    if (ret == ERR)
-    {
-      for (j = 0; j < n_perms; j++)
-        free(perms[j]);
-      free(perms);
-      return ERR;
-    }
-    if (i == 0)
-    {
-      min_ob = ret;
-      max_ob = ret;
-    }
-    else
-    {
-      if (ret < min_ob)
-        min_ob = ret;
-      if (ret > max_ob)
-        max_ob = ret;
-    }
-    average_ob += ret / (double)n_perms;
-  }
-  fin = clock();
-  if (fin == (clock_t)-1)
-  {
-    for (i = 0; i < n_perms; i++)
-      free(perms[i]);
-    free(perms);
-    return ERR;
+    dicts[i] = init_dictionary(size, order);
+    if (dicts[i] == NULL)
+      goto cleanup;
+    if (massive_insertion_dictionary(dicts[i], perms[i], size) == ERR)
+      goto cleanup;
   }
 
-  ptime->size = N;
-  ptime->n_elems = n_perms;
-  ptime->time = ((double)(fin - ini) / CLOCKS_PER_SEC) / n_perms;
-  ptime->average_ob = average_ob;
+  keys = malloc(n_keys * sizeof(*keys));
+  if (keys == NULL)
+    goto cleanup;
+  generator(keys, n_keys, size);
+
+  ini = clock();
+  if (ini == (clock_t)-1)
+    goto cleanup;
+
+  for (i = 0; i < n_perms; i++)
+  {
+    for (j = 0; j < n_keys; j++)
+    {
+      ret = search_dictionary(dicts[i], keys[j], &pos, method);
+      if (ret == ERR || pos == NOT_FOUND)
+        goto cleanup;
+
+      total_ob += ret;
+      if (first || ret < min_ob)
+        min_ob = ret;
+      if (first || ret > max_ob)
+        max_ob = ret;
+      first = 0;
+    }
+  }
+
+  fin = clock();
+  if (fin == (clock_t)-1)
+    goto cleanup;
+
+  ptime->size = size;
+  ptime->n_elems = n_perms * n_keys;
+  ptime->time = ((double)(fin - ini) / CLOCKS_PER_SEC) / ptime->n_elems;
+  ptime->average_ob = total_ob / ptime->n_elems;
   ptime->min_ob = min_ob;
   ptime->max_ob = max_ob;
+  status = OK;
+
+cleanup:
 
   for (i = 0; i < n_perms; i++)
     free(perms[i]);
-
   free(perms);
-
-  return OK;
+  if (dicts != NULL)
+  {
+    for (i = 0; i < n_perms; i++)
+      free_dictionary(dicts[i]);
+    free(dicts);
+  }
+  free(keys);
+  return status;
 }
 
-/***************************************************/
-/* Function: generate_sorting_times Date: 09/10/2026 */
-/* Authors: Ziqi y Josemi                          */
-/* Mide method para N = num_min + k*incr <= num_max*/
-/* y guarda la tabla en file. Devuelve OK o ERR.   */
-/***************************************************/
-
-short generate_sorting_times(pfunc_sort method, char *file,
-                             int num_min, int num_max,
-                             int incr, int n_perms)
+short generate_search_times(pfunc_search method,
+                            char order,
+                            char *file,
+                            int min_size,
+                            int max_size,
+                            int size_incr,
+                            int n_perms,
+                            pfunc_key_generator generator,
+                            int n_keys)
 {
   PTIME_AA times;
-  int i, num;
+  int i, n_sizes;
   short ret;
 
-  if (!method || !file || num_min <= 0 || num_max < num_min ||
-      incr <= 0 || n_perms <= 0)
+  if (!method || !generator || !file || min_size <= 0 ||
+      max_size < min_size || size_incr <= 0 || n_perms <= 0 ||
+      n_keys <= 0)
     return ERR;
-  
-  num = (num_max - num_min) / incr + 1;
 
-  times = malloc(num * sizeof(*times));
+  n_sizes = (max_size - min_size) / size_incr + 1;
+
+  times = malloc(n_sizes * sizeof(*times));
   if (times == NULL)
     return ERR;
 
-  for (i = 0; i < num; i++)
+  for (i = 0; i < n_sizes; i++)
   {
-    if (average_sorting_time(method, n_perms, num_min + i * incr, &times[i]) == ERR)
+    if (average_search_time(method, order, min_size + i * size_incr,
+                            n_perms, generator, n_keys,
+                            &times[i]) == ERR)
     {
       free(times);
       return ERR;
     }
   }
 
-  ret = save_time_table(file, times, num);
+  ret = save_time_table(file, times, n_sizes);
   free(times);
   return ret;
 }
@@ -146,7 +154,7 @@ short generate_sorting_times(pfunc_sort method, char *file,
 /* Function: save_time_table  Date: 09/10/2026     */
 /* Authors: Ziqi y Josemi                          */
 /* Escribe una fila por tamaño en file:            */
-/* N n_elems time average_ob min_ob max_ob         */
+/* Size n_elems time average_ob min_ob max_ob      */
 /* Devuelve OK o ERR.                              */
 /***************************************************/
 
@@ -169,7 +177,10 @@ short save_time_table(char *file, PTIME_AA ptime, int n_times)
                 ptime[i].time, ptime[i].average_ob, ptime[i].min_ob,
                 ptime[i].max_ob) < 0)
     {
-      fclose(fp);
+      if (fclose(fp) != 0)
+      {
+        return ERR;
+      }
       return ERR;
     }
   }
