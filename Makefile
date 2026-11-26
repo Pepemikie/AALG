@@ -1,5 +1,5 @@
 CC = cc -std=c99 -Wall -Wextra
-#CFLAGS = -O3
+CFLAGS = -O3
 LDLIBS = -lm
 
 PROGRAMS = exercise1 \
@@ -11,11 +11,14 @@ all: $(PROGRAMS)
 permutations.o: permutations.c permutations.h
 	$(CC) $(CFLAGS) -c permutations.c
 
-search.o: search.c search.h permutations.h
+search.o: search.c search.h 
 	$(CC) $(CFLAGS) -c search.c
 
 times.o: times.c times.h search.h permutations.h
 	$(CC) $(CFLAGS) -c times.c
+
+gen.o: gen.c gen.h
+	$(CC) $(CFLAGS) -c gen.c
 
 exercise1: exercise1.c search.o permutations.o
 	$(CC) $(CFLAGS) -o $@ exercise1.c search.o permutations.o $(LDLIBS)

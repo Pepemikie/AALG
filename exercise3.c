@@ -41,8 +41,7 @@ int main(int argc, char **argv)
                 "--n_perms N --n_keys N --generator NAME "
                 "--order <sorted|unsorted> --method <binary|linear|auto> "
                 "--output FILE\n"
-                "NAME must be uniform, potential, or gaussian; auto search "
-                "requires unsorted order.\n",
+                "NAME must be uniform, potential, or gaussian.\n",
                 argv[0]);
         return EXIT_FAILURE;
     }
@@ -150,10 +149,9 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    if ((method == bin_search && order != SORTED) ||
-        (method == lin_auto_search && order != NOT_SORTED)) {
+    if ((method == bin_search && order != SORTED)) {
         fprintf(stderr,
-                "Binary search requires sorted order; auto search requires unsorted order.\n");
+                "Binary search requires sorted order.\n");
         return EXIT_FAILURE;
     }
 

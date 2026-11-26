@@ -118,10 +118,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    if ((method == bin_search && order != SORTED) ||
-        (method == lin_auto_search && order != NOT_SORTED)) {
-        fprintf(stderr,
-                "Binary search requires sorted order; auto search requires unsorted order.\n");
+    if (method == bin_search && order != SORTED) {
+        fprintf(stderr, "Binary search requires sorted order.\n");
         return EXIT_FAILURE;
     }
 
